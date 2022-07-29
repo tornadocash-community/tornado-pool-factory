@@ -6,8 +6,8 @@ pragma abicoder v2;
 import { Address } from "@openzeppelin/contracts/utils/Address.sol";
 import { Initializable } from "@openzeppelin/contracts/proxy/Initializable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
-import "./ERC20TornadoCloneable.sol";
-import "./ETHTornadoCloneable.sol";
+import "./instances/ERC20TornadoCloneable.sol";
+import "./instances/ETHTornadoCloneable.sol";
 
 contract InstanceFactory is Initializable {
   using Clones for address;
