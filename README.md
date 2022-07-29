@@ -61,12 +61,12 @@ Check config.js for actual values.
 
 With `salt` = `0x0000000000000000000000000000000000000000000000000000000047941987` address must be:
 
-1. `SidechainInstanceFactory` - `0xE24B853247B37375A080553082a5385Dda95E8cf`
-2. `SidechainInstanceFactory proxy` - `0x168de886aC22e73b3306e234579794340a0eb746`
-3. `InstanceFactory` - `0x8B85eB475Ac8D286DcF307346a6EAE9E9c93665d`
-4. `InstanceFactory proxy` - `0xf30827C1588b17ABAeF855DF92bf6B60615F3e9C`
-5. `InstanceProposalCreator` - `0xe1FcF99262F00cCbe2CE6cC70CE956C7e5728C10`
-6. `InstanceProposalCreator proxy` - `0xa9189801C88fe8222001d2ee962A6A4150DB6026`
+1. `SidechainInstanceFactory` - `0x3D36D4b204E68e8A1431ec31Bea1fFbA3eC04590`
+2. `SidechainInstanceFactory proxy` - `0x9d5C91ccF5c58b312896C4B4De45426fA128b001`
+3. `InstanceFactory` - `0x83216783423500116723884F70dB44fB7BBb855b`
+4. `InstanceFactory proxy` - `0x300aF836C74c1Af73f4353130AC1314Ed59B6a0A`
+5. `InstanceProposalCreator` - `0x2b73b3555F1904CB8042cA6703734438eD4F28a0`
+6. `InstanceProposalCreator proxy` - `0x84E013c8699Cb115906929B68b1Dc5ca5B2Fc46c`
 
 Check addresses with current config:
 
