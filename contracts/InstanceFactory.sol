@@ -102,4 +102,13 @@ contract InstanceFactory is Initializable {
     nativeCurImpl = address(new ETHTornadoCloneable(_verifier, _hasher));
     emit NewImplementationSet(ERC20Impl, nativeCurImpl, _verifier, _hasher);
   }
+
+  /**
+   * @dev Transfers adminship of the contract to a new account (`newAdmin`).
+   * Can only be called by the current admin.
+   */
+  function transferAdminship(address newAdmin) external onlyAdmin {
+    require(newAdmin != address(0), "IF: new owner is the zero address");
+    admin = newAdmin;
+  }
 }
