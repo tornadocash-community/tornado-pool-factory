@@ -77,6 +77,8 @@ Check addresses with current config:
 
 Deploy SidechainInstanceFactory:
 
+Check config.js for actual **admin** value for this sidechain (TornadoCash community multisig).
+
 ```shell
     yarn hardhat run scripts/deploySidechainInstanceFactory.js --network mainnet
 ```
