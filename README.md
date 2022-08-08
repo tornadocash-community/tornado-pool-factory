@@ -1,40 +1,44 @@
-# Tornado Instances Factory
+# Tornado Pool Factory
 
 ## About
 
-This repository contains:
+Separate instance of [Tornado classic](https://github.com/tornadocash/tornado-core) is needed for each [token, denomination] pair. This repository contains smart contracts of Tornado Pool Factory, which is used to create and register new pools:
 
-1. `InstanceFactory` - instance factory for the creation new Tornado ERC20/native pools
-2. `InstanceProposalCreator` - governance proposal factory for the addition of new Tornado instances to the Tornado router
+- factory creates a new Tornado pool
+- if there is [pool registry](https://github.com/Rezan-vm/tornado-relayer-registry/blob/main/contracts/tornado-proxy/InstanceRegistry.sol) on this chain (only ETH mainnet for now), the factory also creates [governance](https://github.com/tornadocash/tornado-governance) proposal for registration new pool in instance registry
+
+There are two deployed contracts:
+
+1. `InstanceFactory` - instance factory for the creation of new Tornado ERC20/native pools
+2. `InstanceProposalCreator` - governance proposal factory for the addition of new Tornado instances to the Tornado instance registry
 
 ### InstanceFactory
 
-Anyone can create a new instance by calling `createInstanceClone` method of the factory with parameters:
+Anyone for sidechains and only governance for mainnet can create a new instance by calling `createInstanceClone` method of the factory with parameters:
 
-1. `address token` - address of ERC20 token for a new instance, zero address for the native instance
-2. `uint256 denomination` - denomination for new instance (tokens can only be deposited in certain denominations into instances)
+1. `address token` - address of ERC20 token for a new instance, zero address for the native currency
+2. `uint256 denomination` - denomination for new instance (tokens can only be deposited in certain denominations into Tornado instances)
 
 ### InstanceProposalCreator
 
-Anyone can create governance proposal for the addition of a new instance by calling `createProposalApprove/createProposalPermit` method of the factory with parameters (proposal creation fee in TORN is charged from sender):
+Anyone can create a governance proposal for the addition of a new instance by calling `createProposalApprove/createProposalPermit` method of the factory with parameters (proposal creation fee in TORN is charged from the sender):
 
 1. `address token` - address of ERC20 token for a new instance, zero address for the native instance
 2. `uint24 uniswapPoolSwappingFee` - fee value of Uniswap instance which will be used for `TORN/token` price determination. `3000` means 0.3% fee Uniswap pool. Zero value for the native instance.
 3. `uint256[] denominations` - list of denominations for each new instance (tokens can only be deposited in certain denominations into instances).
 4. `uint32[] protocolFees` - list of protocol fees for each new instance (this fee is only charged from registrated relayer during withdrawal process). `100` means 1% of instance denomination fee for withdrawal throw registrated relayer.
 
-## Factory parameters
+## Parameters
 
 ### InstanceProposalCreator
 
 1. `max number of new instances in one proposal` - the current version supports the addition of a maximum of 4 instances at once.
-2. `proposal creation fee` - this fee is charged from creator of proposal during `createProposalApprove/createProposalPermit` factory method execution. It can be changed by governance. Default value is stored in `config.js`.
-3. `TWAPSlotsMin` - minimum number of TWAP slots for Uniswap pool that is chosen during `createProposalApprove/createProposalPermit` factory method call. It can be changed by governance. Default value is stored in `config.js`.
+2. `proposal creation fee` - this fee is charged from creator of the proposal during `createProposalApprove/createProposalPermit` factory method execution. It can be changed by governance. Default value is stored in `config.js`.
+3. `TWAPSlotsMin` - minimum number of TWAP slots for Uniswap pool that is chosen during `createProposalApprove/createProposalPermit` factory method call. It can be changed by governance. The default value is stored in `config.js`.
 
 ## Warnings
 
 1. This version of the factory creates a proposal for **immutable** Tornado instance initialization.
-2. For `InstanceProposalCreator` users should manually propose a proposal after its creation using the factory (in governance UI for example). As `propose()` method caller must have 1000 TORN locked in the governance. Moreover, the proposer can't propose more than one proposal simultaneously.
 
 ## Tests
 
@@ -53,7 +57,7 @@ To run test scripts:
     yarn test
 ```
 
-Test scripts cover instance factory deployment, proposal deployment and executing proposal.
+Test scripts cover instance factory deployment, proposal deployment, and executing proposal.
 
 ## Deploy
 
@@ -77,13 +81,13 @@ Check addresses with current config:
 
 Deploy SidechainInstanceFactory:
 
-Check config.js for actual **admin** value for this sidechain (TornadoCash community multisig).
+Check config.js for the actual **admin** value for this sidechain (TornadoCash community multisig).
 
 ```shell
     yarn hardhat run scripts/deploySidechainInstanceFactory.js --network mainnet
 ```
 
-Deploy InstanceProposalCreator:
+Deploy InstanceProposalCreator + InstanceFactory (ETH mainnet):
 
 ```shell
     yarn hardhat run scripts/deployInstanceProposalCreator.js --network mainnet
